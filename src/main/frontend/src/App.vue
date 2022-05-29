@@ -17,8 +17,8 @@
       <div v-if="errorMesage===true" class="red"> {{errorMesage}}</div>
       <div v-if="successMessage===true" class="green"> {{successMessage}}</div>
 
-      <login-form @login="login($event)" v-if="registering===false"></login-form>
-      <login-form @register="login($event)" v-else button-label="Zarejestruj się"></login-form>
+      <login-form @submit="login($event)" v-if="registering===false"></login-form>
+      <login-form @submit="register($event)" v-else button-label="Zarejestruj się"></login-form>
 
     </div>
   </div>
