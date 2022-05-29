@@ -14,8 +14,8 @@
       <button @click="registering = false" :class="!registering ? '' : 'button-clear'">Loguję się</button>
       <button @click="registering = true" :class="registering ? '' : 'button-clear'">Rejestruję się</button>
 
-      <div v-if="errorMesage===true" class="red"> {{errorMesage}}</div>
-      <div v-if="successMessage===true" class="green"> {{successMessage}}</div>
+      <div v-if="errorMesage" class="red"> {{errorMesage}}</div>
+      <div v-if="successMessage" class="green"> {{successMessage}}</div>
 
       <login-form @submit="login($event)" v-if="registering===false"></login-form>
       <login-form @submit="register($event)" v-else button-label="Zarejestruj się"></login-form>
@@ -71,7 +71,7 @@
     vertical-align: middle;
   }
 
-  .red {background: red; }
-  .green {background: green;}
+  .red {background: red; color: white;}
+  .green {background: green; color: white;}
 </style>
 
