@@ -41,6 +41,8 @@
         },
         methods: {
             login(user) {
+              this.$http.post('tokens', user)
+              .then(()=> {success})
                 this.authenticatedUsername = user.login;
             },
             logout() {
