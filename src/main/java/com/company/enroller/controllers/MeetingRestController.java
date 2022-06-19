@@ -76,7 +76,7 @@ public class MeetingRestController {
         if (foundMeeting.getParticipants().contains(participant)) {
             return new ResponseEntity<String>("Participant already exists", HttpStatus.BAD_REQUEST);
         }
-
+//
         foundMeeting.addParticipant(participant);
         meetingService.update(foundMeeting);
         return new ResponseEntity<Participant>(participant, HttpStatus.OK);
