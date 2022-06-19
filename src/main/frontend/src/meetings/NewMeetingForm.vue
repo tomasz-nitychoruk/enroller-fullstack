@@ -25,6 +25,7 @@
         methods: {
             addNewMeeting() {
                 this.error = false;
+
                 if (this.newMeeting.name) {
                     this.$emit('added', this.newMeeting);
                     this.newMeeting = {participants: []};

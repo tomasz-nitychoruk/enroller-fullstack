@@ -18,30 +18,59 @@
 </template>
 
 <script>
-    import NewMeetingForm from "./NewMeetingForm";
-    import MeetingsList from "./MeetingsList";
-
-    export default {
-        components: {NewMeetingForm, MeetingsList},
-        props: ['username'],
-        data() {
-            return {
-                meetings: []
-            };
-        },
-        methods: {
-            addNewMeeting(meeting) {
-                this.meetings.push(meeting);
-            },
-            addMeetingParticipant(meeting) {
-                meeting.participants.push(this.username);
-            },
-            removeMeetingParticipant(meeting) {
-                meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
-            },
-            deleteMeeting(meeting) {
-                this.meetings.splice(this.meetings.indexOf(meeting), 1);
-            }
-        }
+import NewMeetingForm from "./NewMeetingForm";
+import MeetingsList from "./MeetingsList";
+export default {
+  components: {NewMeetingForm, MeetingsList},
+  props: ['username'],
+  data() {
+    return {
+      meetings: []
+    };
+  },
+  methods: {
+    addNewMeeting(meeting) {
+      this.$http.post('meetings', meeting)
+          .then(response => {
+            console.log(response);
+            this.reloadMeetings();
+          })
+          .catch(err => console.log("error:" + err));
+    },
+    addMeetingParticipant(meeting) {
+      this.$http.post('meetings/' + meeting.id +'/participants?username=' + this.username)
+          .then((response) => {
+            console.log(response);
+            this.reloadMeetings();
+          })
+          .catch(err => console.log("error" + err))
+    },
+    removeMeetingParticipant(meeting) {
+      //meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
+      this.$http.delete('meetings/' + meeting.id +'/' + this.username)
+          .then((response) => {
+            console.log(response);
+            this.reloadMeetings();
+          })
+          .catch(err => console.log("error" + err))
+    },
+    deleteMeeting(meeting) {
+      //this.meetings.splice(this.meetings.indexOf(meeting), 1);
+      this.$http.delete('meetings/' + meeting.id)
+          .then((response) => {
+            console.log(response);
+            this.reloadMeetings();
+          })
+          .catch(err => console.log("error" + err))
+    },
+    reloadMeetings() {
+      this.$http.get('meetings')
+          .then(response => {
+            console.log(response);
+            this.meetings = response.body;
+          })
+          .catch(err => console.log("error" + err))
     }
+  }
+}
 </script>
