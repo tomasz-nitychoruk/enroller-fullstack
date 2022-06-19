@@ -15,17 +15,18 @@
       <td>
         <ul v-if="meeting.participants">
           <li v-for="participant in meeting.participants" :key="participant">
-            {{ participant }}
+            {{ participant.login }}
           </li>
         </ul>
       </td>
       <td style="text-align: right; min-width: 400px" v-if="meeting.participants">
-        <button v-if="meeting.participants.indexOf(username) < 0"
+        <button
+            v-if="meeting.participants.indexOf(login) < 0"
                 class="button-outline"
                 @click="$emit('attend', meeting)">
           Zapisz się
         </button>
-        <button v-else class="button-outline" @click="$emit('unattend', meeting)">Wypisz się</button>
+        <button  class="button-outline" @click="$emit('unattend', meeting)">Wypisz się</button>
         <button v-if="meeting.participants.length === 0" class="button" @click="$emit('delete', meeting)">
           Usuń puste spotkanie
         </button>
@@ -37,6 +38,6 @@
 
 <script>
 export default {
-  props: ['meetings', 'username']
+  props: ['meetings', 'login']
 }
 </script>

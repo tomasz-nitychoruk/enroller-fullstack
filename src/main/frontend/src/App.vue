@@ -8,7 +8,7 @@
       <h2>Witaj {{ authenticatedUsername }}!
         <a @click="logout()" class="float-right  button-outline button">Wyloguj</a>
       </h2>
-      <meetings-page :username="authenticatedUsername"></meetings-page>
+      <meetings-page :login="authenticatedUsername"></meetings-page>
     </div>
     <div v-else>
       <button @click="registering = false" :class="registering ? 'button-outline' : ''">Loguję się</button>

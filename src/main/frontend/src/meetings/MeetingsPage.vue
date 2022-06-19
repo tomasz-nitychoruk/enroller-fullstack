@@ -10,7 +10,7 @@
     </h3>
 
     <meetings-list :meetings="meetings"
-                   :username="username"
+                   :login="login"
                    @attend="addMeetingParticipant($event)"
                    @unattend="removeMeetingParticipant($event)"
                    @delete="deleteMeeting($event)"></meetings-list>
@@ -22,7 +22,7 @@ import NewMeetingForm from "./NewMeetingForm";
 import MeetingsList from "./MeetingsList";
 export default {
   components: {NewMeetingForm, MeetingsList},
-  props: ['username'],
+  props: ['login'],
   data() {
     return {
       meetings: []
@@ -35,19 +35,19 @@ export default {
             console.log(response);
             this.reloadMeetings();
           })
-          .catch(err => console.log("error:" + err));
+          .catch(err => console.log("error: addNM" + err));
     },
     addMeetingParticipant(meeting) {
-      this.$http.post('meetings/' + meeting.id +'/participants?username=' + this.username)
+
+      this.$http.post('meetings/' + meeting.id +'/participants?username=' + this.login)
           .then((response) => {
             console.log(response);
             this.reloadMeetings();
           })
-          .catch(err => console.log("error" + err))
+          .catch(err => console.log("error: " + err))
     },
     removeMeetingParticipant(meeting) {
-      //meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
-      this.$http.delete('meetings/' + meeting.id +'/' + this.username)
+      this.$http.delete('meetings/' + meeting.id +'/' + this.login)
           .then((response) => {
             console.log(response);
             this.reloadMeetings();
@@ -55,7 +55,6 @@ export default {
           .catch(err => console.log("error" + err))
     },
     deleteMeeting(meeting) {
-      //this.meetings.splice(this.meetings.indexOf(meeting), 1);
       this.$http.delete('meetings/' + meeting.id)
           .then((response) => {
             console.log(response);
@@ -71,6 +70,9 @@ export default {
           })
           .catch(err => console.log("error" + err))
     }
+  },
+  mounted() {
+    this.reloadMeetings();
   }
 }
 </script>
