@@ -63,10 +63,10 @@ public class MeetingRestController {
         return new ResponseEntity<Collection<Participant>>(meeting.getParticipants(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/participants", method = RequestMethod.POST)
-    public ResponseEntity<?> addParticipantsToMeeting(@PathVariable long id, @RequestParam String username) {
+    @RequestMapping(value = "/{id}/participants/{login}", method = RequestMethod.POST)
+    public ResponseEntity<?> addParticipantsToMeeting(@PathVariable long id, @PathVariable("login") String login) {
         Meeting foundMeeting = meetingService.findById(id);
-        Participant participant = participantService.findByLogin(username);
+        Participant participant = participantService.findByLogin(login);
         if (foundMeeting == null) {
             return new ResponseEntity<String>("Meeting not found", HttpStatus.NOT_FOUND);
         }
@@ -82,12 +82,6 @@ public class MeetingRestController {
         return new ResponseEntity<Participant>(participant, HttpStatus.OK);
     }
 
-
-
-
-
-
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteMeeting(@PathVariable("id") long id) {
         System.out.println("I am deleteing meeting with ID: " + id);
@@ -96,7 +90,7 @@ public class MeetingRestController {
         return new ResponseEntity<Meeting>(meeting, HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "/{id}/{login}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/participants/{login}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteMeetingParticipant(@PathVariable("id") long id, @PathVariable("login") String login) {
         Meeting foundMeeting = meetingService.findById(id);
         Participant participant = participantService.findByLogin(login);

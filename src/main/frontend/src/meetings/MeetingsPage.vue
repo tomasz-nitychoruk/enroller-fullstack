@@ -39,7 +39,7 @@ export default {
     },
     addMeetingParticipant(meeting) {
 
-      this.$http.post('meetings/' + meeting.id +'/participants?username=' + this.login)
+      this.$http.post('meetings/' + meeting.id +'/participants/' + this.login)
           .then((response) => {
             console.log(response);
             this.reloadMeetings();
@@ -47,7 +47,7 @@ export default {
           .catch(err => console.log("error: " + err))
     },
     removeMeetingParticipant(meeting) {
-      this.$http.delete('meetings/' + meeting.id +'/' + this.login)
+      this.$http.delete('meetings/' + meeting.id +'/participants/' + this.login)
           .then((response) => {
             console.log(response);
             this.reloadMeetings();
